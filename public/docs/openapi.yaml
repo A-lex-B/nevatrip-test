@@ -26,27 +26,27 @@ paths:
                 event_id:
                   type: integer
                   description: ''
-                  example: 12
+                  example: 19
                 event_date:
                   type: string
                   description: 'Must be a valid date.'
-                  example: '2024-10-30T18:02:46'
+                  example: '2024-10-30T20:44:43'
                 ticket_adult_price:
                   type: integer
                   description: ''
-                  example: 7
+                  example: 20
                 ticket_adult_quantity:
                   type: integer
                   description: ''
-                  example: 13
+                  example: 1
                 ticket_kid_price:
                   type: integer
                   description: ''
-                  example: 12
+                  example: 11
                 ticket_kid_quantity:
                   type: integer
                   description: ''
-                  example: 8
+                  example: 20
                 ticket_concessionary_price:
                   type: integer
                   description: 'This field is required when <code>ticket_concessionary_quantity</code> is present.'
@@ -54,15 +54,15 @@ paths:
                 ticket_concessionary_quantity:
                   type: integer
                   description: ''
-                  example: 14
+                  example: 15
                 ticket_group_price:
                   type: integer
                   description: 'This field is required when <code>ticket_group_quantity</code> is present.'
-                  example: 7
+                  example: 20
                 ticket_group_quantity:
                   type: integer
                   description: ''
-                  example: 19
+                  example: 4
               required:
                 - event_id
                 - event_date

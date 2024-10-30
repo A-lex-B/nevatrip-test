@@ -10,7 +10,7 @@
     ],
     "info": {
         "name": "API \u0434\u043b\u044f \u043f\u043e\u043a\u0443\u043f\u043a\u0438 \u0431\u0438\u043b\u0435\u0442\u043e\u0432",
-        "_postman_id": "a94b1563-c1c7-4c7a-b028-e06cfabc67fa",
+        "_postman_id": "185c690d-f1f1-4078-8a19-a781bd699d74",
         "description": "",
         "schema": "https:\/\/schema.getpostman.com\/json\/collection\/v2.1.0\/collection.json"
     },
@@ -41,7 +41,7 @@
                         ],
                         "body": {
                             "mode": "raw",
-                            "raw": "{\"event_id\":12,\"event_date\":\"2024-10-30T18:02:46\",\"ticket_adult_price\":7,\"ticket_adult_quantity\":13,\"ticket_kid_price\":12,\"ticket_kid_quantity\":8,\"ticket_concessionary_price\":13,\"ticket_concessionary_quantity\":14,\"ticket_group_price\":7,\"ticket_group_quantity\":19}"
+                            "raw": "{\"event_id\":19,\"event_date\":\"2024-10-30T20:44:43\",\"ticket_adult_price\":20,\"ticket_adult_quantity\":1,\"ticket_kid_price\":11,\"ticket_kid_quantity\":20,\"ticket_concessionary_price\":13,\"ticket_concessionary_quantity\":15,\"ticket_group_price\":20,\"ticket_group_quantity\":4}"
                         },
                         "description": "",
                         "auth": {

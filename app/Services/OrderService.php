@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Http\Resources\OrderResource;
 use App\Models\Order;
 use Exception;
 use Illuminate\Http\Client\PendingRequest;
@@ -11,13 +12,21 @@ use Illuminate\Support\Facades\Http;
 
 class OrderService
 {
-    private int $barcode;
+    private int $totalQuantity;
+
+    private array $barcodes;
 
     public function __construct(private array $request) {}
 
-    public function store(): Order
+    public function store(): OrderResource
     {
-        $this->barcode = $this->generateBarcode();
+        $this->totalQuantity = Arr::get($this->request, 'ticket_adult_quantity') + 
+                                Arr::get($this->request, 'ticket_kid_quantity') + 
+                                Arr::get($this->request, 'ticket_concessionary_quantity') + 
+                                Arr::get($this->request, 'ticket_group_quantity');
+        
+        $this->generateBarcodes();
+
 
         Http::fake([
             'http://api.site.com/book*' => Http::sequence()
@@ -27,7 +36,7 @@ class OrderService
             'http://api.site.com/approve*' => Http::response(...$this->bookingResponses('approve'))
         ]);
 
-        $booking = Http::withQueryParameters(Arr::add($this->request, 'barcode', $this->barcode))
+        $booking = Http::withQueryParameters(Arr::add($this->request, 'barcodes', $this->barcodes))
             ->retry(3, 100, function(Exception $exception, PendingRequest $bookingRequest) {
 
                 if (
@@ -36,8 +45,8 @@ class OrderService
                 ) {
                     return false;
                 }
-                $this->barcode = $this->generateBarcode();
-                $bookingRequest->withQueryParameters(Arr::add($this->request, 'barcode', $this->barcode));
+                $this->generateBarcodes();
+                $bookingRequest->withQueryParameters(Arr::add($this->request, 'barcodes', $this->barcodes));
                 return true;
 
             }, throw: false)->get('http://api.site.com/book');
@@ -45,7 +54,7 @@ class OrderService
 
         if ($booking->json('message') == 'order successfully booked') {
 
-            $approving = Http::get('http://api.site.com/approve', ['barcode' => $this->barcode]);
+            $approving = Http::get('http://api.site.com/approve', ['barcodes' => $this->barcodes]);
 
         } else {
 
@@ -60,10 +69,12 @@ class OrderService
                             Arr::get($this->request, 'ticket_concessionary_price') * Arr::get($this->request,'ticket_concessionary_quantity') + 
                             Arr::get($this->request, 'ticket_group_price') * Arr::get($this->request,'ticket_group_quantity');
 
-            return Order::create(array_merge($this->request, [
-                'barcode' => $this->barcode,
-                'total_price' => $totalPrice
-            ]));
+            $order = Order::create(array_merge($this->request, ['total_price' => $totalPrice]));
+            $order->tickets()->createMany(Arr::map($this->barcodes, function(string $value) {
+                return ['barcode' => $value];
+            }));
+
+            return new OrderResource($order);
 
         } else {
 
@@ -71,9 +82,13 @@ class OrderService
         }
     }
 
-    private function generateBarcode(): int
+    private function generateBarcodes(): void
     {
-        return mt_rand(1000000000, 9999999999);
+        $this->barcodes = [];
+
+        for ($i = 1; $i <= $this->totalQuantity; $i++) {
+            $this->barcodes[] = mt_rand(1000000000, 9999999999);
+        }
     }
 
     private function bookingResponses(string $url): array
