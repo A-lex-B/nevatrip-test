@@ -1,0 +1,93 @@
+name: Endpoints
+description: ''
+endpoints:
+  -
+    httpMethods:
+      - POST
+    uri: api/order
+    metadata:
+      groupName: Endpoints
+      groupDescription: ''
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'Создание нового заказа.'
+      description: ''
+      authenticated: false
+      custom: []
+    headers:
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters: []
+    cleanUrlParameters: []
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters:
+      event_id:
+        name: event_id
+        description: ''
+        required: true
+        example: 9
+        type: integer
+        enumValues: []
+        exampleWasSpecified: false
+        custom: []
+      event_date:
+        name: event_date
+        description: 'Must be a valid date.'
+        required: true
+        example: '2024-10-30T16:58:49'
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        custom: []
+      ticket_adult_price:
+        name: ticket_adult_price
+        description: ''
+        required: true
+        example: 1
+        type: integer
+        enumValues: []
+        exampleWasSpecified: false
+        custom: []
+      ticket_adult_quantity:
+        name: ticket_adult_quantity
+        description: ''
+        required: true
+        example: 11
+        type: integer
+        enumValues: []
+        exampleWasSpecified: false
+        custom: []
+      ticket_kid_price:
+        name: ticket_kid_price
+        description: ''
+        required: true
+        example: 5
+        type: integer
+        enumValues: []
+        exampleWasSpecified: false
+        custom: []
+      ticket_kid_quantity:
+        name: ticket_kid_quantity
+        description: ''
+        required: true
+        example: 8
+        type: integer
+        enumValues: []
+        exampleWasSpecified: false
+        custom: []
+    cleanBodyParameters:
+      event_id: 9
+      event_date: '2024-10-30T16:58:49'
+      ticket_adult_price: 1
+      ticket_adult_quantity: 11
+      ticket_kid_price: 5
+      ticket_kid_quantity: 8
+    fileParameters: []
+    responses: []
+    responseFields: []
+    auth: []
+    controller: null
+    method: null
+    route: null
+    custom: []

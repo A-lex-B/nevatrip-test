@@ -1,66 +1,94 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# Тестовое задание #
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+### Задание №1 ###
 
-## About Laravel
+После успешной покупки билетов на событие, данные попадают в список заказов.
+Список заказов сохраняется в таблице MySql в виде:
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+id  | event_id  | event_date          | ticket_adult_price  | ticket_adult_quantity  | ticket_kid_price  | ticket_kid_quantity  | barcode   | equal_price  | created
+--- | --------- | ------------------- | ------------------- | ---------------------- | ----------------- | -------------------- | --------  | ------------ | -------------------
+1   | 003       | 2021-08-21 13:00:00 | 700                 | 1                      | 450               | 0                    | 11111111  | 700          | 2021-01-11 13:22:09
+2   | 006       | 2021-07-29 18:00:00 | 1000                | 0                      | 800               | 2                    | 22222222  | 1600         | 2021-01-12 16:62:08
+3   | 003       | 2021-08-15 17:00:00 | 700                 | 4                      | 450               | 3                    | 33333333  | 4150         | 2021-01-13 10:08:45
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
 
-## Learning Laravel
+Где:
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+* `id` - int(10) - инкрементальный порядковый номер заказа
+* `event_id` - int(11) - уникальный ид события. У каждого события есть свое название, 
+  описание, расписание, цены и свой уникальный `event_id` соответственно
+* `event_date` - varchar(10) - дата и время на которое были куплены билеты
+* `ticket_adult_price` - int(11) - цена взрослого билета на момент покупки
+* `ticket_adult_quantity` - int(11) - количество купленных взрослых билетов в этом заказе
+* `ticket_kid_price` - int(11) - цена детского билета на момент покупки
+* `ticket_kid_quantity` - int(11) - количество купленных детских билетов в этом заказе
+* `barcode` - varchar(120) - уникальный штрих код заказа
+* `equal_price` - int(11) - общая сумма заказа
+* `created` - datetime - дата создания заказа
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 2000 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+**Задача: написать функцию, которая будет добавлять заказы в эту таблицу.**
 
-## Laravel Sponsors
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
+Аргументы которые функция получает на входе:
+`event_id`, `event_date`, `ticket_adult_price`, 
+`ticket_adult_quantity`, `ticket_kid_price`, `ticket_kid_quantity` 
 
-### Premium Partners
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Cubet Techno Labs](https://cubettech.com)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[Many](https://www.many.co.uk)**
-- **[Webdock, Fast VPS Hosting](https://www.webdock.io/en)**
-- **[DevSquad](https://devsquad.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[OP.GG](https://op.gg)**
-- **[WebReinvent](https://webreinvent.com/?utm_source=laravel&utm_medium=github&utm_campaign=patreon-sponsors)**
-- **[Lendio](https://lendio.com)**
+ Нужно сгенерировать `barcode`, который будет уникальным со 
+ случайным набором цифр, он не должен быть порядковым. 
 
-## Contributing
+ Так же, существует некая сторонняя api.site.com. API писать не нужно,
+возвращаемые данные можно замокать и возвращать в случайном порядке.
+ в которой нужно сделать бронь заказа отправив ей (https://api.site.com/book)
+`event_id`, `event_date`, `ticket_adult_price`,
+`ticket_adult_quantity`, `ticket_kid_price`, `ticket_kid_quantity`,
+`barcode`. На что она может вернуть
+либо `{message: 'order successfully booked'}`,
+либо `{error: 'barcode already exists'}`.
+В случае если получаем ошибку,
+нужно сгенерировать новый barcode и повторить попытку.
+Важно учесть, если запрос будет происходить одновременно,
+не должно возникнуть такой ситуации,
+что двум разным заказам присвоился один номер.
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+После успешной брони, нужно отправить на стороннюю апи
+запрос с подтверждением (https://api.site.com/approve),
+который принимает только barcode.
+Ответов может быть 2 варианта - успешный:
+`{message: 'order successfully aproved'}`
+и различные варианты ошибок `{error: 'event cancelled'}`,
+`{error: 'no tickets'}`, `{error: 'no seats'}`,
+`{error: 'fan removed'}`. В случае успеха, сохраняем заказ в БД
 
-## Code of Conduct
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+### Задание №2 ###
 
-## Security Vulnerabilities
+1.   Некоторые события нужно продавать с дополнительными типами билетов - льготный 
+     и групповой, у которых будут свои цены и название.
+     Имеется информация, что вероятно, будут другие типы билетов, 
+     которые нужно будет добавить.
+     Нужно уметь сохранять при заказе 2 дополнительных типа билета, 
+     льготный и групповой в бд.
+     **Задача** - Нормализовать таблицу учитывая добавленные типы билетов, 
+     показать конечный вид таблицы. Объяснить свое решение.
+2.   Часто посетители из одного заказа приходят не одновременно на события.
+     Возникает необходимость проверять их билеты по отдельности.
+     Для этого у каждого билета должен быть свой баркод.
+     Если в одном заказе было куплено несколько билетов, 2 взрослых, 3 детских, 
+     4 льготных - то должно быть 9 баркодов для каждого билета соответственно.
+     **Задача** - Нормализовать таблицу, учитывая что у каждого билета свой баркод,
+     показать конечный вид таблицы. Объяснить свое решение.
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+### Задание №3 ###
 
-## License
+Сопроводить документацией своё решение.
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+
+---
+
+
+**Задания выполнены в виде версий репозитория. Для каждой версии создан тег.**
+
+

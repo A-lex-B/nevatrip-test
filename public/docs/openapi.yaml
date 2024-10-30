@@ -1,0 +1,61 @@
+openapi: 3.0.3
+info:
+  title: 'API для покупки билетов'
+  description: ''
+  version: 1.0.0
+servers:
+  -
+    url: 'http://localhost'
+paths:
+  /api/order:
+    post:
+      summary: 'Создание нового заказа.'
+      operationId: ''
+      description: ''
+      parameters: []
+      responses: {  }
+      tags:
+        - Endpoints
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                event_id:
+                  type: integer
+                  description: ''
+                  example: 9
+                event_date:
+                  type: string
+                  description: 'Must be a valid date.'
+                  example: '2024-10-30T16:58:49'
+                ticket_adult_price:
+                  type: integer
+                  description: ''
+                  example: 1
+                ticket_adult_quantity:
+                  type: integer
+                  description: ''
+                  example: 11
+                ticket_kid_price:
+                  type: integer
+                  description: ''
+                  example: 5
+                ticket_kid_quantity:
+                  type: integer
+                  description: ''
+                  example: 8
+              required:
+                - event_id
+                - event_date
+                - ticket_adult_price
+                - ticket_adult_quantity
+                - ticket_kid_price
+                - ticket_kid_quantity
+      security: []
+tags:
+  -
+    name: Endpoints
+    description: ''

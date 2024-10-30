@@ -5,15 +5,14 @@ namespace App\Http\Controllers;
 use App\Http\Requests\OrderStoreRequest;
 use App\Models\Order;
 use App\Services\OrderService;
-use Illuminate\Http\Client\Response;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Http;
 
 class OrderController extends Controller
 {
-    public function store(OrderStoreRequest $request)
+    /**
+     * Создание нового заказа.
+     */
+    public function store(OrderStoreRequest $request): Order
     {
-        $orderService = new OrderService($request->validated());
-        $orderService->store();
+        return (new OrderService($request->validated()))->store();
     }
 }
