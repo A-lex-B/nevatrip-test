@@ -55,8 +55,10 @@ class OrderService
 
         if ($approving->json('message') == 'order successfully aproved') {
 
-            $totalPrice = $this->request['ticket_adult_price'] * $this->request['ticket_adult_quantity'] + 
-                            $this->request['ticket_kid_price'] * $this->request['ticket_kid_quantity'];
+            $totalPrice = Arr::get($this->request,'ticket_adult_price') * Arr::get($this->request,'ticket_adult_quantity') + 
+                            Arr::get($this->request, 'ticket_kid_price') * Arr::get($this->request,'ticket_kid_quantity') + 
+                            Arr::get($this->request, 'ticket_concessionary_price') * Arr::get($this->request,'ticket_concessionary_quantity') + 
+                            Arr::get($this->request, 'ticket_group_price') * Arr::get($this->request,'ticket_group_quantity');
 
             return Order::create(array_merge($this->request, [
                 'barcode' => $this->barcode,
